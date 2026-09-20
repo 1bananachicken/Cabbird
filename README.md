@@ -63,15 +63,15 @@ Cabbird 本体以 **GNU Affero General Public License v3（AGPL-3.0-only）** �
 运行包默认安装以下插件（详见[内建插件](docs/user-guide/built-in-plugins.md)）。
 它们**默认全部处于停用状态**，需要你在界面的 **插件 > 已安装** 里手动启用：
 
-| 插件 | id | 作用 |
-| --- | --- | --- |
-| **Entity Overlay** | `cabbird.entity-overlay` | 绘制实体边界框与标签 |
-| **Player Coordinates** | `cabbird.player-coords` | 显示本地玩家坐标与采样指标 |
-| **Player Teleport** | `cabbird.player-teleport` | 传送本地玩家，并报告是否真的生效 |
-| **Entity Teleport** | `cabbird.entity-teleport` | 把任意实体搬到玩家处或指定坐标 |
-| **IL2CPP Dump** | `cabbird.unity-dump` | 在会话内导出活体 IL2CPP 类型系统 |
-| **Custom UID** | `cabbird.fake-uid` | 修改客户端界面上显示的 UID |
-| **Damage Replay** | `cabbird.damage-replay` | 把游戏自己的伤害入口再调用 N 次（不是倍率） |
+| 插件 | 作用 |
+| --- | --- |
+| **Entity Overlay** | 绘制实体边界框与标签 |
+| **Player Coordinates** | 显示本地玩家坐标与采样指标 |
+| **Player Teleport** | 传送本地玩家 |
+| **Entity Teleport** | 把任意实体搬到玩家处或指定坐标 |
+| **IL2CPP Dump** | 在会话内导出活体 IL2CPP 类型系统 |
+| **Custom UID** | 修改客户端界面上显示的 UID |
+| **Damage Replay** | 倍攻 |
 
 ### 🌐 第三方插件
 
