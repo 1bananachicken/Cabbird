@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 2,
+  "id": "cabbird.player-teleport",
+  "name": "Player Teleport",
+  "author": "Cabbird",
+  "license": "AGPL-3.0-only",
+  "version": "0.3.0",
+  "description": "Moves the local player to typed world coordinates and exposes one slot for every retained, non-current role entity. Hidden-role writes run through cabbird.unity.transform on the game thread; local-player writes keep the verified cabbird.unity.player-teleport path. The retained-role list is scanned on demand (or on an opt-in 5 s cadence) instead of four times a second, because each scan keeps the host's entity walk alive on the game thread.",
+  "entry": "plugin.dll",
+  "api": {"major": 1, "minMinor": 0, "maxMinor": 0},
+  "games": ["ap"],
+  "builds": ["ap-*"],
+  "loadPhase": "game-ready",
+  "services": [
+    {"id": "cabbird.ui", "minVersion": 1},
+    {"id": "cabbird.unity.player", "minVersion": 1, "optional": true},
+    {"id": "cabbird.unity.player-teleport", "minVersion": 1, "optional": true},
+    {"id": "cabbird.unity.entities", "minVersion": 1, "optional": true},
+    {"id": "cabbird.unity.transform", "minVersion": 1, "optional": true}
+  ],
+  "capabilities": [
+    "ui",
+    "unity-player-snapshot",
+    "unity-player-teleport",
+    "unity-entities",
+    "unity-transform"
+  ]
+}

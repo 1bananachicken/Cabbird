@@ -1,0 +1,9 @@
+#pragma once
+
+#include <string_view>
+
+namespace cabbird::detail {
+inline constexpr std::string_view kRepositoryConfigurationSchemaJson = R"CABBIRD_SCHEMA(
+@CABBIRD_REPOSITORY_CONFIG_SCHEMA_JSON@
+)CABBIRD_SCHEMA";
+}  // namespace cabbird::detail

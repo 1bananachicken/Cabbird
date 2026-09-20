@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 2,
+  "id": "cabbird.fake-uid",
+  "name": "FakeUID",
+  "description": "Customizes the local Unity watermark UID text without changing account or network data.",
+  "author": "Cabbird",
+  "version": "0.1.0",
+  "entry": "plugin.dll",
+  "api": {
+    "major": 1,
+    "minMinor": 0,
+    "maxMinor": 0
+  },
+  "games": [
+    "ap"
+  ],
+  "builds": [
+    "ap-*"
+  ],
+  "loadPhase": "game-ready",
+  "services": [
+    {
+      "id": "cabbird.ui",
+      "minVersion": 1
+    },
+    {
+      "id": "cabbird.config",
+      "minVersion": 1,
+      "optional": true
+    },
+    {
+      "id": "cabbird.unity.il2cpp",
+      "minVersion": 1,
+      "optional": true
+    },
+    {
+      "id": "cabbird.scheduler",
+      "minVersion": 1
+    }
+  ],
+  "capabilities": [
+    "ui",
+    "configuration",
+    "unity-il2cpp",
+    "scheduler"
+  ]
+}

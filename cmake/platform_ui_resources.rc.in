@@ -1,0 +1,18 @@
+/* Platform UI resources, ported from Anomaly's cmake/platform_ui_resources.rc.in.
+ *
+ * 101 RCDATA -- the platform logo.  src/ui/platform_host.cpp reads it back with
+ *               FindResourceW(&__ImageBase, MAKEINTRESOURCEW(kPlatformLogoResourceId), ...)
+ *               and draws it as the host header logo, both through the standalone D3D11 host
+ *               (CreateStandaloneHeaderLogo) and through the game's resource backend.
+ *               Embedded at 32x32 because that is the size it is displayed at: upstream feeds
+ *               this same slot from logo-header.png.
+ *
+ * The absolute path is injected by CMake's configure_file(@ONLY) from file(TO_CMAKE_PATH ...),
+ * because rc.exe resolves relative paths against its own working directory.
+ *
+ * Upstream's second entry, 102 (the ESC-menu logo, read back by LoadNteEscMenuLogoBytes in
+ * src/runtime/core_main.cpp), is deliberately absent: it is one of the NTE-specific designs this
+ * migration excludes, it has no reader here at all, and embedding a megabyte of bytes nothing
+ * reads would be dead weight in an image that is manually mapped into the game process.
+ */
+101 RCDATA "@CABBIRD_PLATFORM_LOGO_PATH@"

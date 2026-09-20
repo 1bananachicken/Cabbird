@@ -1,0 +1,13 @@
+/* Launcher resources, ported from Anomaly's apps/launcher/AnomalyLauncher.rc.in.
+ *
+ * 101 RCDATA -- the product logo.  apps/launcher/main.cpp reads it back as
+ *               kLogoResourceId and draws it in the header.  Embedded at 32x32 because that is
+ *               the size it is displayed at, exactly as upstream does with logo-header.png.
+ * 201 ICON   -- the window and taskbar icon, used as kIconResourceId for the window class.
+ *
+ * The absolute paths are injected by CMake's configure_file(@ONLY) from
+ * file(TO_CMAKE_PATH ...), because rc.exe resolves relative paths against its own working
+ * directory rather than the source tree.
+ */
+101 RCDATA "@CABBIRD_PLATFORM_LOGO_PATH@"
+201 ICON "@CABBIRD_LAUNCHER_ICON_PATH@"

@@ -1,0 +1,21 @@
+#pragma once
+
+/* GENERATED -- do not edit.  Do not add this file to the repository.
+ *
+ * Source: cmake/plugin_manifest_schema.hpp.in
+ * Data:   schemas/plugin-manifest.schema.json
+ * Produced: CMakeLists.txt, the "embedded JSON Schemas" block
+ *
+ * COPIED FROM Anomaly's cmake/plugin_manifest_schema.hpp.in with only the mechanical renames:
+ * `anomaly` -> `cabbird`, `ANOMALY_` -> `CABBIRD_`, and the raw-string delimiter
+ * ANOMALY_SCHEMA -> CABBIRD_SCHEMA.  The namespace name inside stays as Anomaly writes it
+ * (`cabbird::detail`) because that is what the copied .cpp files spell. */
+
+#include <string_view>
+
+namespace cabbird::detail {
+
+inline constexpr std::string_view kPluginManifestSchemaJson =
+    R"CABBIRD_SCHEMA(@CABBIRD_PLUGIN_MANIFEST_SCHEMA_JSON@)CABBIRD_SCHEMA";
+
+}  // namespace cabbird::detail

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 2,
+  "id": "cabbird.unity-dump",
+  "name": "IL2CPP Dump",
+  "author": "Cabbird",
+  "license": "AGPL-3.0-only",
+  "version": "0.1.0",
+  "description": "Reads the live IL2CPP type system out of the running game and writes it to a file, on demand, with hot reload. The walk itself is host-side; this plugin owns only which walks to request, over which images, and where the file lands.",
+  "entry": "plugin.dll",
+  "api": {"major": 1, "minMinor": 0, "maxMinor": 0},
+  "games": ["ap"],
+  "builds": ["ap-*"],
+  "loadPhase": "game-ready",
+  "services": [
+    {"id": "cabbird.ui", "minVersion": 1},
+    {"id": "cabbird.unity.dump", "minVersion": 1, "optional": true}
+  ],
+  "capabilities": ["ui", "unity-dump"]
+}

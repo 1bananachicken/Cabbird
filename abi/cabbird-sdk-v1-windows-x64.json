@@ -1,0 +1,129 @@
+{
+  "schema": "cabbird-sdk-abi-snapshot-v1",
+  "sdk_version": "1.0.0",
+  "plugin_api_major": 1,
+  "plugin_api_minor": 0,
+  "entry_point": "CabbirdPluginEntryV1",
+  "pointer_size": 8,
+  "structs": [
+    {
+      "name": "CabbirdStringViewV1",
+      "size": 16,
+      "align": 8,
+      "fields": [
+        { "name": "data", "offset": 0, "size": 8 },
+        { "name": "size", "offset": 8, "size": 8 }
+      ]
+    },
+    {
+      "name": "CabbirdStatusV1",
+      "size": 24,
+      "align": 8,
+      "fields": [
+        { "name": "code", "offset": 0, "size": 4 },
+        { "name": "reserved", "offset": 4, "size": 4 },
+        { "name": "message", "offset": 8, "size": 16 }
+      ]
+    },
+    {
+      "name": "CabbirdAllocatorV1",
+      "size": 40,
+      "align": 8,
+      "fields": [
+        { "name": "struct_size", "offset": 0, "size": 4 },
+        { "name": "reserved", "offset": 4, "size": 4 },
+        { "name": "user", "offset": 8, "size": 8 },
+        { "name": "allocate", "offset": 16, "size": 8 },
+        { "name": "reallocate", "offset": 24, "size": 8 },
+        { "name": "release", "offset": 32, "size": 8 }
+      ]
+    },
+    {
+      "name": "CabbirdGenerationHandleV1",
+      "size": 16,
+      "align": 8,
+      "fields": [
+        { "name": "id", "offset": 0, "size": 8 },
+        { "name": "generation", "offset": 8, "size": 8 }
+      ]
+    },
+    {
+      "name": "CabbirdHostApiV1",
+      "size": 64,
+      "align": 8,
+      "fields": [
+        { "name": "struct_size", "offset": 0, "size": 4 },
+        { "name": "api_major", "offset": 4, "size": 2 },
+        { "name": "api_minor", "offset": 6, "size": 2 },
+        { "name": "host_context", "offset": 8, "size": 8 },
+        { "name": "allocator", "offset": 16, "size": 40 },
+        { "name": "query_service", "offset": 56, "size": 8 }
+      ]
+    },
+    {
+      "name": "CabbirdPluginDescriptorV1",
+      "size": 120,
+      "align": 8,
+      "fields": [
+        { "name": "struct_size", "offset": 0, "size": 4 },
+        { "name": "api_major", "offset": 4, "size": 2 },
+        { "name": "api_minor", "offset": 6, "size": 2 },
+        { "name": "id", "offset": 8, "size": 16 },
+        { "name": "name", "offset": 24, "size": 16 },
+        { "name": "author", "offset": 40, "size": 16 },
+        { "name": "version", "offset": 56, "size": 16 },
+        { "name": "on_load", "offset": 72, "size": 8 },
+        { "name": "on_start", "offset": 80, "size": 8 },
+        { "name": "on_stop", "offset": 88, "size": 8 },
+        { "name": "on_unload", "offset": 96, "size": 8 },
+        { "name": "on_update", "offset": 104, "size": 8 },
+        { "name": "on_draw", "offset": 112, "size": 8 }
+      ]
+    },
+    {
+      "name": "CabbirdCoreServiceV1",
+      "size": 72,
+      "align": 8,
+      "fields": [
+        { "name": "struct_size", "offset": 0, "size": 4 },
+        { "name": "service_version", "offset": 4, "size": 4 },
+        { "name": "user", "offset": 8, "size": 8 },
+        { "name": "log", "offset": 16, "size": 8 },
+        { "name": "read_memory", "offset": 24, "size": 8 },
+        { "name": "write_memory", "offset": 32, "size": 8 },
+        { "name": "patch_memory", "offset": 40, "size": 8 },
+        { "name": "plugin_directory", "offset": 48, "size": 8 },
+        { "name": "module_base", "offset": 56, "size": 8 },
+        { "name": "last_status", "offset": 64, "size": 8 }
+      ]
+    },
+    {
+      "name": "CabbirdEspCameraV1",
+      "size": 64,
+      "align": 8,
+      "fields": [
+        { "name": "struct_size", "offset": 0, "size": 4 },
+        { "name": "flags", "offset": 4, "size": 4 },
+        { "name": "position", "offset": 8, "size": 24 },
+        { "name": "rotation", "offset": 32, "size": 24 },
+        { "name": "horizontal_fov_degrees", "offset": 56, "size": 4 },
+        { "name": "reserved", "offset": 60, "size": 4 }
+      ]
+    },
+    {
+      "name": "CabbirdUiServiceV1",
+      "size": 344,
+      "align": 8,
+      "fields": [
+        { "name": "struct_size", "offset": 0, "size": 4 },
+        { "name": "service_version", "offset": 4, "size": 4 },
+        { "name": "user", "offset": 8, "size": 8 },
+        { "name": "begin_window", "offset": 24, "size": 8 },
+        { "name": "end_window", "offset": 32, "size": 8 },
+        { "name": "text", "offset": 40, "size": 8 },
+        { "name": "button", "offset": 48, "size": 8 },
+        { "name": "combo", "offset": 336, "size": 8 }
+      ]
+    }
+  ]
+}

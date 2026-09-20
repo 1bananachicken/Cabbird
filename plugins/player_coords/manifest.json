@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 2,
+  "id": "cabbird.player-coords",
+  "name": "Player Coordinates",
+  "author": "Cabbird",
+  "license": "AGPL-3.0-only",
+  "version": "0.1.0",
+  "description": "Reads the local player's world position out of cabbird.unity.player and records readings. Read-only by construction: it has no write capability, and a missing reading is shown as '--' rather than as the origin.",
+  "entry": "plugin.dll",
+  "api": {"major": 1, "minMinor": 0, "maxMinor": 0},
+  "games": ["ap"],
+  "builds": ["ap-*"],
+  "loadPhase": "game-ready",
+  "services": [
+    {"id": "cabbird.ui", "minVersion": 1},
+    {"id": "cabbird.unity.player", "minVersion": 1, "optional": true}
+  ],
+  "capabilities": [
+    "ui",
+    "unity-player-snapshot"
+  ]
+}

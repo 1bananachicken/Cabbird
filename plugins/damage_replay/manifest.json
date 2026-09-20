@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 2,
+  "id": "cabbird.damage-replay",
+  "name": "Damage Replay",
+  "description": "Re-runs the game's own damage entry for hits the player sourced. Memory is read through the host's cabbird.core service (module_base, read_memory), so every read is capability-authorized and range-validated rather than bypassing the host.",
+  "author": "Cabbird",
+  "license": "AGPL-3.0-only",
+  "version": "0.3.0",
+  "entry": "plugin.dll",
+  "api": {
+    "major": 1,
+    "minMinor": 0,
+    "maxMinor": 0
+  },
+  "games": [
+    "ap"
+  ],
+  "builds": [
+    "ap-*"
+  ],
+  "loadPhase": "game-ready",
+  "services": [
+    {
+      "id": "cabbird.core",
+      "minVersion": 1
+    },
+    {
+      "id": "cabbird.ui",
+      "minVersion": 1
+    },
+    {
+      "id": "cabbird.interop.hook",
+      "minVersion": 1
+    },
+    {
+      "id": "cabbird.localization",
+      "minVersion": 1,
+      "optional": true
+    },
+    {
+      "id": "cabbird.storage",
+      "minVersion": 1,
+      "optional": true
+    }
+  ],
+  "capabilities": [
+    "ui",
+    "interop-hook",
+    "memory-read",
+    "storage"
+  ]
+}

@@ -1,0 +1,16 @@
+# Build trees.  Disposable by definition -- everything under here is regenerated
+# by cmake.
+.build/
+out/
+build/
+
+# Python bytecode from the analysis scripts.
+__pycache__/
+*.pyc
+
+# Scratch space for local analysis and tooling.  Nothing here is part of the
+# released tree, and nothing outside these paths may depend on it.
+artifacts/
+.local/
+# Crash dumps, if any analysis copies one in.
+*.dmp

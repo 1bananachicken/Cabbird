@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 2,
+  "id": "cabbird.entity-teleport",
+  "name": "Entity Teleport",
+  "author": "Cabbird",
+  "license": "AGPL-3.0-only",
+  "version": "0.1.0",
+  "description": "Moves ANY entity: bring it to the local player, put it at typed coordinates, or offset it from where it is. Composes cabbird.unity.entities (which entity, and its data address) with cabbird.unity.transform (resolve it, read and write its Transform) -- a composition nothing in this tree performed. The write runs on the host's game thread and the position is re-read a few ticks later, so a move the game undoes is reported as REVERTED, not as success.",
+  "entry": "plugin.dll",
+  "api": {"major": 1, "minMinor": 0, "maxMinor": 0},
+  "games": ["ap"],
+  "builds": ["ap-*"],
+  "loadPhase": "game-ready",
+  "services": [
+    {"id": "cabbird.ui", "minVersion": 1},
+    {"id": "cabbird.unity.entities", "minVersion": 1, "optional": true},
+    {"id": "cabbird.unity.transform", "minVersion": 1, "optional": true},
+    {"id": "cabbird.unity.player", "minVersion": 1, "optional": true}
+  ],
+  "capabilities": [
+    "ui",
+    "unity-entities",
+    "unity-transform",
+    "unity-player-snapshot"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "ap-0.6.2.2",
+      "game": "AzurPromilia",
+      "gameAssembly": "GameAssembly.dll",
+      "notes": "Windows x64, Unity 2022.3.62f3 IL2CPP.",
+      "methods": {
+        "unity.playerloop.dispatch": {
+          "type": "Runtime.Extension.UPlayerLoop",
+          "method": "Dispatch",
+          "signature": "System.Void Dispatch()",
+          "token": "0x6000F59",
+          "rva": "0x5D53E00",
+          "prologue": "48895C2408574881EC900000000F29B4",
+          "description": "Walks Runtime.Extension.UPlayerLoop.s_Ticks and invokes every registered per-frame callback. The game's own frame boundary -- the correct place to hang a game-domain tick."
+        },
+        "unity.transform.get_position": {
+          "type": "UnityEngine.Transform",
+          "method": "get_position",
+          "signature": "UnityEngine.Vector3 get_position()",
+          "rva": "0xC687860",
+          "prologue": "48895C2408574883EC2033C0488BFA488901488BD9894108",
+          "description": "The entity walk's position read, called DIRECTLY instead of through il2cpp_runtime_invoke. The calling convention is not assumed: the 24 prologue bytes above are the first 24 bytes of THIS build's body (dump.cs:2343381, RVA 0xC687860 = file offset 0xC686460 in GameAssembly.dll), and they decode as `mov [rsp+8],rbx; push rdi; sub rsp,0x20; xor eax,eax; mov rdi,rdx; mov [rcx],rax; mov rbx,rcx; mov [rcx+8],eax; ...` -- the function ZEROES twelve bytes through RCX before anything else, so RCX is a caller-supplied Vector3 return buffer and RDX is `this`: void (*)(float* out, void* self, const MethodInfo*). The walk re-reads these bytes at the resolved address before its first call, so a build whose body differs is refused rather than called. The rest of the body (0xC687878..0xC6878AC) confirms it and shows the third argument is unused: `mov rax,[rip+0x409CF91]; test rax,rax; jnz +0x13; lea rcx,[rip+0x84E545]; call 0x13EC540; mov [rip+0x409CF79],rax` caches the resolved native icall in a global on first use, then `mov rdx,rbx; mov rcx,rdi; call rax` invokes it as (this, out) and `mov rax,rbx` returns the buffer. Nothing in the body reads R8 or R9, so a direct call passes exactly the three arguments the convention above describes. Calling it the other way round (`this` in RCX) is what the removed fast path did, and it is why the entity set emptied: it wrote twelve zero bytes over a managed object's header."
+        }
+      }
+    }
+  ]
+}

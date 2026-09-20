@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 2, "id": "cabbird.example.tick-counter", "name": "Game Tick Counter", "author": "Cabbird", "license": "AGPL-3.0-only", "version": "1.0.0",
+  "entry": "plugin.dll", "api": {"major": 1, "minMinor": 0, "maxMinor": 0},
+  "games": ["ap"], "builds": ["ap-*"], "loadPhase": "game-ready",
+  "services": [{"id": "cabbird.ui", "minVersion": 1}], "capabilities": ["ui", "game-events"]
+}

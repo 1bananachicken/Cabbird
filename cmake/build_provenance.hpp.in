@@ -1,0 +1,10 @@
+#pragma once
+
+#include <string_view>
+
+namespace cabbird::generated {
+
+inline constexpr std::string_view kSourceCommit{"@CABBIRD_SOURCE_COMMIT@"};
+inline constexpr bool kSourceDirty = @CABBIRD_SOURCE_DIRTY@;
+
+}  // namespace cabbird::generated

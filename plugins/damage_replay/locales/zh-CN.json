@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "locale": "zh-CN",
+  "messages": {
+    "window.title": "伤害重放",
+    "plugin.description": "伤害重放。",
+    "cabbird.damage-replay.enabled": "启用",
+    "cabbird.damage-replay.replay-count": "重放次数",
+    "cabbird.damage-replay.counters": "调用 {0}   重放 {1}   已拒绝传入 {2}",
+    "cabbird.damage-replay.no-checkbox": "此宿主未提供 checkbox 控件",
+    "cabbird.damage-replay.applying": "正在游戏线程上应用…",
+    "cabbird.damage-replay.status.installed": "已安装。",
+    "cabbird.damage-replay.status.removed": "已移除。",
+    "cabbird.damage-replay.status.no-hook-service": "宿主未提供 hook 服务",
+    "cabbird.damage-replay.status.already-installed": "已经安装",
+    "cabbird.damage-replay.status.no-game-assembly": "GameAssembly.dll 未加载",
+    "cabbird.damage-replay.status.create-refused": "创建被拒绝（状态 {0}）",
+    "cabbird.damage-replay.status.hook-unavailable": "此宿主构建不提供 cabbird.interop.hook"
+  }
+}

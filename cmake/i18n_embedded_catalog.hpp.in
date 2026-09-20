@@ -1,0 +1,26 @@
+#pragma once
+
+/* GENERATED -- do not edit.  Do not add this file to the repository.
+ *
+ * Source:   cmake/i18n_embedded_catalog.hpp.in
+ * Data:     locales/host/en-US.json
+ * Produced: CMakeLists.txt, the "embedded host catalogue" block
+ *
+ * COPIED FROM Anomaly's cmake/i18n_embedded_catalog.hpp.in, with only the mechanical renames
+ * (`anomaly` -> `cabbird`, `ANOMALY_` -> `CABBIRD_`).
+ *
+ * WHY THIS EXISTS AT ALL.  `src/i18n/i18n.cpp` includes `cabbird/i18n_embedded_catalog.hpp`,
+ * and a build that includes it without generating it first fails with
+ *   fatal error C1083: cannot open include file: "cabbird/i18n_embedded_catalog.hpp"
+ * because the file does not exist in Anomaly's source tree either -- it is generated.  The
+ * i18n catalogue mechanism is therefore DATA (locales/host/en-US.json) plus a BUILD STEP, and
+ * a coverage check over headers and sources can never see either half. */
+
+#include <string_view>
+
+namespace cabbird::detail {
+
+inline constexpr std::string_view kEmbeddedEnglishHostCatalog =
+@CABBIRD_HOST_EN_US_CATALOG_LITERALS@;
+
+}  // namespace cabbird::detail

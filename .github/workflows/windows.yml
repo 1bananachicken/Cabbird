@@ -1,0 +1,143 @@
+name: windows
+
+# Ported from Anomaly's .github/workflows/windows.yml, which is the flow this repository's
+# CMake presets and install components were already shaped after: configure the one preset,
+# build the one configuration, stage per-component artifacts for a branch, and package +
+# publish for a tag.  The differences from upstream are the names, and two deliberate ones:
+#
+#   * `--parallel` is NOT passed to `cmake --build`.  Upstream passes it; on this
+#     repository's Visual Studio 17 2022 / MSBuild 17.14 combination it makes the build
+#     return 1 before printing anything useful (see build.cmd and docs/developer-guide/
+#     building.md).  The preset already builds in parallel, so nothing is lost.
+#   * the Tools component holds cabbird-cli only -- this tree has no tools/ directory, so
+#     there is no third archive to stage on a branch.
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - 'v*'
+    paths-ignore:
+      - '**/*.md'
+  pull_request:
+    paths-ignore:
+      - '**/*.md'
+
+jobs:
+  build:
+    permissions:
+      contents: read
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        shell: pwsh
+        # A tag pins the release version through CABBIRD_RELEASE_VERSION, and that single
+        # variable is what puts the version into the code: cmake/version.h.in is configured
+        # into both SDK headers (in-tree configured_version.h and the installed
+        # cabbird/sdk/version.h), so a release tag needs no version bump in any file.  There
+        # used to be a configure-time check against include/cabbird/sdk/version.h; it is gone
+        # with the manual bump it enforced.
+        run: |
+          $arguments = @(
+            '--preset', 'windows-vs2022'
+          )
+          if ($env:GITHUB_REF_TYPE -eq 'tag') {
+            $arguments += "-DCABBIRD_RELEASE_VERSION=$env:GITHUB_REF_NAME"
+          }
+          cmake @arguments
+      - name: Build
+        # CMake 4 is not usable yet: MinHook (fetched by tag) declares
+        # `cmake_minimum_required(VERSION 3.0...3.5)`, and CMake 4 removed compatibility
+        # with minimums below 3.5.  The windows-2022 image currently ships 3.3x; if a
+        # runner bump ever lands on 4.x, this step is where it will fail.  Upstream has the
+        # same constraint, so the fix belongs upstream (or in the pin), not here.
+        run: cmake --build --preset windows-relwithdebinfo
+      - name: Stage CI runtime and tools
+        if: github.ref_type != 'tag'
+        shell: pwsh
+        run: |
+          cmake --install .build/windows-vs2022 --config RelWithDebInfo --prefix .build/ci-artifacts/runtime --component GameRuntime
+          cmake --install .build/windows-vs2022 --config RelWithDebInfo --prefix .build/ci-artifacts/tools --component Tools
+      - name: Upload CI runtime
+        if: github.ref_type != 'tag'
+        uses: actions/upload-artifact@v4
+        with:
+          name: cabbird-runtime-windows-x64
+          path: .build/ci-artifacts/runtime
+          if-no-files-found: error
+      - name: Upload CI tools
+        if: github.ref_type != 'tag'
+        uses: actions/upload-artifact@v4
+        with:
+          name: cabbird-tools-windows-x64
+          path: .build/ci-artifacts/tools
+          if-no-files-found: error
+      - name: Package runtime, SDK, tools and symbols
+        if: github.ref_type == 'tag'
+        shell: pwsh
+        run: ./tools/package_release.ps1 -BuildDirectory .build/windows-vs2022 -Version ($env:GITHUB_REF_NAME).TrimStart('v') -Configuration RelWithDebInfo
+      - name: Upload release archives
+        if: github.ref_type == 'tag'
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-archives
+          path: |
+            .build/release/Cabbird-*-runtime.zip
+            .build/release/Cabbird-*-sdk.zip
+            .build/release/Cabbird-*-tools.zip
+            .build/release/Cabbird-*-symbols.zip
+          if-no-files-found: error
+  release:
+    if: github.ref_type == 'tag'
+    needs: build
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+      pull-requests: read
+    runs-on: windows-2022
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Generate release notes
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: .github/cliff.toml
+          args: -vv --latest --strip header
+        env:
+          OUTPUT: CHANGES.md
+          GITHUB_REPO: ${{ github.repository }}
+      - name: Check release notes
+        shell: pwsh
+        run: |
+          if (!(Test-Path CHANGES.md) -or (Get-Item CHANGES.md).Length -eq 0) {
+            throw 'git-cliff did not generate release notes.'
+          }
+          Get-Content CHANGES.md
+      - name: Download release archives
+        uses: actions/download-artifact@v4
+        with:
+          name: release-archives
+          path: .build/release
+      - name: Attest published archives
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            .build/release/Cabbird-*-runtime.zip
+            .build/release/Cabbird-*-sdk.zip
+            .build/release/Cabbird-*-tools.zip
+            .build/release/Cabbird-*-symbols.zip
+      - name: Publish runtime, SDK, tools and symbols
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            .build/release/Cabbird-*-runtime.zip
+            .build/release/Cabbird-*-sdk.zip
+            .build/release/Cabbird-*-tools.zip
+            .build/release/Cabbird-*-symbols.zip
+          fail_on_unmatched_files: true
+          body_path: CHANGES.md

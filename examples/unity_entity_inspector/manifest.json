@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 2, "id": "cabbird.example.unity-entity-inspector", "name": "Unity Entity Inspector",
+  "description": "Reads the host's live entity source and the local player snapshot, and reports which Unity services resolved on this build.",
+  "author": "Cabbird", "license": "AGPL-3.0-only", "version": "1.0.0",
+  "entry": "plugin.dll", "api": {"major": 1, "minMinor": 0, "maxMinor": 0},
+  "games": ["ap"], "builds": ["ap-*"], "loadPhase": "game-ready",
+  "services": [
+    {"id": "cabbird.ui", "minVersion": 1},
+    {"id": "cabbird.unity.entities", "minVersion": 1, "optional": true},
+    {"id": "cabbird.unity.player", "minVersion": 1, "optional": true}
+  ],
+  "capabilities": ["ui", "unity-entities", "unity-player-snapshot"]
+}
